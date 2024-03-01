@@ -1,0 +1,26 @@
+<div class="form-body">
+    <form
+      autocomplete="off"
+      [formGroup]="createForm"
+      (ngSubmit)="onCreate(createForm.value)"
+    >
+      <div>
+        <label>Name: </label>
+        <input type="text" formControlName="name" autocomplete="off" />
+      </div>
+      <div style="padding:20px; padding-left: 0px">
+        <label>Description: </label>
+        <input type="text" formControlName="description" autocomplete="off" />
+      </div>
+      <button style="margin:10px" type="submit">Submit</button>
+    </form>
+  </div>
+  <div>
+    <div ><h4>Name <span style="margin-left:40px;  padding-right:20px;">Description</span> </h4> </div>
+    @for (todo of todos; track todo?.id) {
+    <p>{{todo?.name }}  <span style="margin-left:60px; padding-top: 2px; padding-right:20px;">{{todo?.description}}</span>   <button  (click)="onDelete(todo?.id)">Delete</button> </p>
+    } @empty {
+    <div>There are no items.</div>
+    }
+    
+  </div>
