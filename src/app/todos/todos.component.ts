@@ -25,8 +25,10 @@ export class TodosComponent implements OnInit, OnDestroy {
   public todos: any;
   public createForm: FormGroup;
   public client: Client;
+  public users:any;
 
   private subscription: any = null;
+  private update: any = null;
 
   constructor(private fb: FormBuilder) {
     this.createForm = this.fb.group({
@@ -54,10 +56,22 @@ export class TodosComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: (event: any) => {
+          console.log("test")
           const newTodo: Todo = event.data.onCreateTodo;
           if (this.todos) {
-            this.todos.items = [newTodo, ...this.todos];
+            this.todos.push(newTodo);
           }
+        }
+      });
+      this.update= this.client
+      .graphql({
+        query: subscriptions.onDeleteTodo
+      })
+      .subscribe({
+        next: (event: any) => {
+          const newTodo: Todo = event.data.onDeleteTodo;
+         this.todos= this.todos.filter((item: { id: string; }) =>item.id !==newTodo.id ); 
+
         }
       });
   }
@@ -78,6 +92,7 @@ export class TodosComponent implements OnInit, OnDestroy {
         }
       });
       console.log('item created!', response);
+      console.log()
       this.createForm.reset();
     } catch (e) {
       console.log('error creating todo...', e);
@@ -97,7 +112,6 @@ export class TodosComponent implements OnInit, OnDestroy {
           input: todoDetails
         }
       });
-      console.log('item deleted!', response);
       this.createForm.reset();
     } catch (e) {
       console.log('error deleting todo...', e);

@@ -1,0 +1,13 @@
+
+  div {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  h1 {
+    text-align: center;
+  }
+  button {
+    position: absolute;
+    right: 0;
+  }
