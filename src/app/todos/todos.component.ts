@@ -12,12 +12,13 @@ import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
 import * as subscriptions from '../../graphql/subscriptions';
 import { post } from 'aws-amplify/api';
+import { CommonModule } from '@angular/common';
 // import APIService from ../../API.Service  
 
 @Component({
   standalone: true,
   selector: 'app-todos',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.css']
 })
@@ -29,6 +30,7 @@ export class TodosComponent implements OnInit, OnDestroy {
 
   private subscription: any = null;
   private update: any = null;
+     isDone = true;
 
   constructor(private fb: FormBuilder) {
     this.createForm = this.fb.group({

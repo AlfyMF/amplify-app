@@ -1,24 +1,35 @@
 <div class="form-body">
-    <form
-      autocomplete="off"
-      [formGroup]="createForm"
-      (ngSubmit)="onCreate(createForm.value)"
-    >
-        <label>Name: </label>
-        <input type="text" formControlName="name" autocomplete="off" />
-        <label style="padding-left: 20px">Description: </label>
-        <input type="text" formControlName="description" autocomplete="off" />
-      <button style="margin:10px" type="submit">Submit</button>
-    </form>
+  <form
+    autocomplete="off"
+    [formGroup]="createForm"
+    (ngSubmit)="onCreate(createForm.value)"
+  >
+    <label>Name: </label>
+    <input type="text" formControlName="name" autocomplete="off" />
+    <label style="padding-left: 20px">Description: </label>
+    <input type="text" formControlName="description" autocomplete="off" />
+    <button style="margin: 10px" type="submit">Submit</button>
+  </form>
+</div>
+<ng-template #elseBlock>
+  <h4 style="padding: 20px; margin-left: 40px; color: red">
+    There are no items
+  </h4>
+</ng-template>
+<div *ngIf="!todos || todos?.length > 0; else elseBlock">
+  <h4>
+    Name <span style="margin-left: 40px; padding-right: 20px">Description</span>
+  </h4>
+  <div *ngFor="let todo of todos">
+    <div>
+      <p>
+        {{ todo?.name }}
+        <span
+          style="margin-left: 60px; padding-top: 2px; padding-right: 20px"
+          >{{ todo?.description }}</span
+        >
+        <button (click)="onDelete(todo?.id)">Delete</button>
+      </p>
+    </div>
   </div>
-  <div>
-    <div><h4>Name <span style="margin-left:40px; padding-right:20px;">Description</span> </h4> </div>
-    @for (todo of todos; track todo?.id) {
-      <div>
-    <p>{{todo?.name }}  <span style="margin-left:60px; padding-top: 2px; padding-right:20px;">{{todo?.description}}</span>   <button  (click)="onDelete(todo?.id)">Delete</button> </p>
-  </div>
-    } @empty {
-    <div>There are no items.</div>
-    } 
-  </div>
-
+</div>
